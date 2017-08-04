@@ -38,8 +38,9 @@
   var slice = Array.prototype.slice;
 
   // Apply number padding.
-  var padding = function(number) {
-    return ("0" + number.toString()).substr(-2);
+  var padding = function(number, pad) {
+    pad = pad || "0";
+    return (pad + number.toString()).substr(-2);
   };
 
   // Improved toFixed number rounding function with support for unprecise floating points
@@ -945,14 +946,17 @@
     format = format.replace("%e", day);
     format = format.replace("%-d", day);
     format = format.replace("%H", padding(hour));
+    format = format.replace("%k", padding(hour, ' '));
     format = format.replace("%-H", hour);
     format = format.replace("%I", padding(hour12));
     format = format.replace("%-I", hour12);
+    format = format.replace("%l", padding(hour12, ' '));
     format = format.replace("%m", padding(month));
     format = format.replace("%-m", month);
     format = format.replace("%M", padding(mins));
     format = format.replace("%-M", mins);
-    format = format.replace("%p", meridianOptions[meridian]);
+    format = format.replace("%P", meridianOptions[meridian]);
+    format = format.replace("%p", meridianOptions[meridian].toUpperCase());
     format = format.replace("%S", padding(secs));
     format = format.replace("%-S", secs);
     format = format.replace("%w", weekDay);
